@@ -3,15 +3,15 @@ package com.boostmytool.beststore.controllers;
 import com.boostmytool.beststore.models.Product;
 import com.boostmytool.beststore.models.ProductDto;
 import com.boostmytool.beststore.services.ProductsRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public class ProductsController {
     }
 
 
-    @GetMapping({"", "/sort"})
+   @GetMapping({ "/sort"})
     public String ShowSortedProducts(Model model) {
         List<Product> products = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));   //store sorted products in list after get all it
         model.addAttribute("products", products);
@@ -78,4 +78,20 @@ public class ProductsController {
         return "products/createProduct";
     }
 
+
+    @PostMapping("/create")
+    public String createProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult result){
+
+        //check imageFile manually that it is notEmpty
+
+        if(productDto.getImageFile().isEmpty()){
+            result.addError(new FieldError("productDto" ,"imageFile" ,"the file is requires"));
+        }
+
+        if(result.hasErrors()){
+            return "products/createProduct";
+        }
+
+        return "redirect:/products";
+    }
 }

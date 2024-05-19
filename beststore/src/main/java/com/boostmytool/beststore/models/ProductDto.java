@@ -22,7 +22,7 @@ public class ProductDto {
     private double price;
 
     @Size(min=10 ,message = "the description should be at least 10 characters")
-    @Size(max=10 ,message = "the description cannot exceed 2000 characters")
+    @Size(max=2000 ,message = "the description cannot exceed 2000 characters")
     private String description;
 
     private MultipartFile imageFile;
