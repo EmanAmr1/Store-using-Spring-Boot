@@ -1,6 +1,7 @@
 package com.boostmytool.beststore.controllers;
 
 import com.boostmytool.beststore.models.Product;
+import com.boostmytool.beststore.models.ProductDto;
 import com.boostmytool.beststore.services.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,35 +28,35 @@ public class ProductsController {
 
     @GetMapping({"/myproducts"})  // to test allProducts in PostMan
     @ResponseBody
-    public List<Product> AllProducts (){
+    public List<Product> AllProducts() {
         return repo.findAll();
     }
 
 
-    @GetMapping({"","/"})
-    public String ShowProducts(Model model){
-        List<Product> products =repo.findAll();   //store products in list after get all it
-        model.addAttribute("products",products);
+    @GetMapping({"", "/"})
+    public String ShowProducts(Model model) {
+        List<Product> products = repo.findAll();   //store products in list after get all it
+        model.addAttribute("products", products);
         return "products/index"; //the html file
     }
 
 
-    @GetMapping({"","/sort"})
-    public String ShowSortedProducts(Model model){
-        List<Product> products =repo.findAll(Sort.by(Sort.Direction.DESC ,"id"));   //store sorted products in list after get all it
-        model.addAttribute("products",products);
+    @GetMapping({"", "/sort"})
+    public String ShowSortedProducts(Model model) {
+        List<Product> products = repo.findAll(Sort.by(Sort.Direction.DESC, "id"));   //store sorted products in list after get all it
+        model.addAttribute("products", products);
         return "products/index"; //the html file
     }
-
 
 
     // ***************************** Product ******************************
     @GetMapping({"/getProduct/{id}"})  // to test allProducts in PostMan
     @ResponseBody
-    public Product GetProductById (@PathVariable int id){
+    public Product GetProductById(@PathVariable int id) {
 
         return repo.findById(id).get();
     }
+
     @GetMapping("/getOneProduct/{id}")
     @ResponseBody
     public ResponseEntity<Product> getProductById(@PathVariable int id) {
@@ -68,7 +69,13 @@ public class ProductsController {
     }
 
 
+    // ***************************** create product ******************************
 
-
+    @GetMapping("/create")
+    public String showCreatePage(Model model) {
+        ProductDto productDto = new ProductDto();
+        model.addAttribute("productDto", productDto);
+        return "products/createProduct";
+    }
 
 }
