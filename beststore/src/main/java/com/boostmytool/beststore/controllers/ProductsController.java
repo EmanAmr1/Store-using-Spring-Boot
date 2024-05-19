@@ -167,4 +167,67 @@ public class ProductsController {
 }
 
 
+
+@PostMapping("/edit")
+    public String updateProduct(Model model ,
+                                @RequestParam int id,
+                                @Valid @ModelAttribute ProductDto productDto,
+                                BindingResult result){
+
+        try {
+            Product p =repo.findById(id).get();
+            model.addAttribute("product",p);
+
+
+            //check if there is any error
+            if(result.hasErrors()){
+                return "products/EditProduct";
+            }
+
+            //check the image
+
+            if(!productDto.getImageFile().isEmpty()){
+                //delete old image
+
+                String uploadDir ="public/images";
+                Path oldImagePath =Paths.get(uploadDir + p.getImageFileName());
+                        try{
+                           Files.delete(oldImagePath);
+
+                        }catch (Exception ex){
+                            System.out.println("Execption: "+ex.getMessage());
+
+                        }
+
+
+                        //save new image file
+                MultipartFile image =productDto.getImageFile();
+                Date createdAt = new Date();  //read the date
+                String storageFileName =image.getOriginalFilename(); //create unique fileName to this image
+
+                    try (InputStream inputStream=image.getInputStream()){  //obj
+                        Files.copy(inputStream,Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                    }
+
+                p.setImageFileName(storageFileName); //the uploaded file
+
+
+
+            }
+            p.setName(productDto.getName());
+            p.setBrand(productDto.getBrand());
+            p.setCategory(productDto.getCategory());
+            p.setPrice(productDto.getPrice());
+            p.setDescription(productDto.getDescription());
+
+            repo.save(p);
+
+        }catch (Exception ex){
+            System.out.println("Exception: "+ex.getMessage());       }
+
+
+        return "redirect:/products";
+}
+
+
 }
