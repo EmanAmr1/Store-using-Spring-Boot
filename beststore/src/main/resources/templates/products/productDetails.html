@@ -26,7 +26,7 @@
 
             <h2 class="text-center mb-5">Product Details</h2>
 
-            <div th:object="${productDto}">
+            <div th:object="${product}">
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">ID</label>
@@ -38,35 +38,35 @@
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Name</label>
                     <div class="col-sm-8">
-                        <input class="form-control-plaintext" th:field="${productDto.name}">
+                        <input class="form-control-plaintext" th:field="${product.name}">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Brand</label>
                     <div class="col-sm-8">
-                        <input class="form-control-plaintext" th:field="${productDto.brand}">
+                        <input class="form-control-plaintext" th:field="${product.brand}">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Category</label>
                     <div class="col-sm-8">
-                        <input class="form-control-plaintext" th:field="${productDto.category}">
+                        <input class="form-control-plaintext" th:field="${product.category}">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Price</label>
                     <div class="col-sm-8">
-                        <input class="form-control-plaintext" th:field="${productDto.price}">
+                        <input class="form-control-plaintext" th:field="${product.price}">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="col-sm-4 col-form-label">Description</label>
                     <div class="col-sm-8">
-                        <input readonly class="form-control-plaintext" th:field="${productDto.description}">
+                        <input readonly class="form-control-plaintext" th:field="${product.description}">
                     </div>
                 </div>
 

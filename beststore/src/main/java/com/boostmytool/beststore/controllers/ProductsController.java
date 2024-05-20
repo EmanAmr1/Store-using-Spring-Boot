@@ -272,14 +272,14 @@ public class ProductsController {
             Product p =repo.findById(id).get();
             model.addAttribute("product", p);
 
-            ProductDto pd = new ProductDto();  //take obj from productDto to show product  details from it
+           /* ProductDto pd = new ProductDto();  //take obj from productDto to show product  details from it
             pd.setName(p.getName());
             pd.setBrand(p.getBrand());
             pd.setCategory(p.getCategory());
             pd.setPrice(p.getPrice());
             pd.setDescription(p.getDescription());
 
-            model.addAttribute("productDto" ,pd);
+            model.addAttribute("productDto" ,pd);*/
         }
         catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
